@@ -45,8 +45,8 @@ class WorkerList(MethodView):
             db.session.commit()
         except IntegrityError:
             abort(400, message ="this worker already exist")
-        except SQLAlchemyError:
-            abort(500, message= "an error occured while saving worker to database")
+        except SQLAlchemyError as error:
+            abort(500, message= f"a {type(error).__name__} error occured while saving worker to database: {error}")
         return sc_worker 
  
     

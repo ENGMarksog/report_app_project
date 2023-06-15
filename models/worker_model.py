@@ -5,7 +5,7 @@ class WorkerModel(db.Model):
 
     worker_id = db.Column(db.String(10), primary_key=True, unique=True)
     email = db.Column(db.String(30), unique=True, nullable=False)
-    password = db.Column(db.String(256), nullable=False)
+    password = db.Column(db.String(1000), nullable=False)
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
     dob = db.Column(db.String(50), nullable=True)
