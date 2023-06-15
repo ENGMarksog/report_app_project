@@ -15,4 +15,3 @@ Dev/pydatabase
 .DS_Store
 *.pyc 
 *.db
-/instance
