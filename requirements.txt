@@ -1,0 +1,15 @@
+flask
+sqlalchemy
+flask-sqlalchemy
+gremlinpython
+python-dotenv
+flask-smorest
+flask-migrate
+marshmallow
+postgres
+psycopg2
+psycopg2-binary
+flask-jwt-extended
+pymongo
+Flask-PyMongo
+passlib
