@@ -25,8 +25,9 @@ class WorkerList(MethodView):
         return WorkerModel.query.all() #only admins and specific role should have this access.
     
 
-    #creating a worker
-    @jwt_required()
+    #creating a worker 
+    #to do: create and endpoint to create workers through signed users
+    #@jwt_required()
     @blp.arguments(WorkerSchema)
     @blp.response(201, WorkerUpdateSchema)
     def post(self, worker_data):
@@ -105,31 +106,6 @@ class WorkerLogin(MethodView):
             return {"access_token": access_token, "refresh_token": refresh_token}, 200
         
         abort(401, message="Invalid credentials")
-
-#for intial setup
-@blp.route("/register")
-class InitAdmin(MethodView):
-    @blp.arguments(WorkerAuth)
-    @blp.response(201, WorkerUpdateSchema)
-    def post(self, worker_data):
-        if WorkerModel.query.filter(WorkerModel.email == worker_data["email"]).first():
-            abort(409, message="A worker with this email already exists.")
-
-        worker_id = uuid.uuid4().hex[:6]
-        created = date.today()
-        password = pbkdf2_sha256.hash(worker_data["password"])
-        worker = {**worker_data, "worker_id":worker_id, "created":created, "password":password}
-        print(worker_data)
-        sc_worker = WorkerModel(**worker)
-        
-        try:
-            db.session.add(sc_worker)
-            db.session.commit()
-        except IntegrityError:
-            abort(400, message ="this worker already exist")
-        except SQLAlchemyError:
-            abort(500, message= "an error occured while saving worker to database")
-        return sc_worker 
 
 
 @blp.route("/refresh")
