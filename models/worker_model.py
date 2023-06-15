@@ -3,7 +3,7 @@ from database import db
 class WorkerModel(db.Model):
     __tablename__="worker"
 
-    worker_id = db.Column(db.String(10), primary_key=True, unique=True)
+    worker_id = db.Column(db.String(256), primary_key=True, unique=True)
     email = db.Column(db.String(30), unique=True, nullable=False)
     password = db.Column(db.String(1000), nullable=False)
     first_name = db.Column(db.String(50), nullable=False)
