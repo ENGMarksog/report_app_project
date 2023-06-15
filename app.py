@@ -3,6 +3,8 @@ from flask_smorest import Api
 from flask_jwt_extended import JWTManager
 from flask_migrate import Migrate
 import models
+import os
+from dotenv import load_dotenv
 from database import db
 from resource.worker import blp as WorkerBlueprint
 from resource.outreach import blp as OutreachBlueprint
@@ -11,9 +13,11 @@ from resource.prayer import blp as PrayerBlueprint
 from resource.study import blp as StudyBlueprint
 from blocklist import BLOCKLIST
 
-def create_app():
+def create_app(db_url=None):
 
     app = Flask(__name__)
+    load_dotenv()
+
     app.config["PROPAGATE_EXCEPTIONS"] = True
     app.config["API_TITLE"] = "SCC REPORT API"
     app.config["API_VERSION"] = "v1"
@@ -21,7 +25,7 @@ def create_app():
     app.config["OPENAPI_URL_PREFIX"] = "/"
     app.config["OPENAPI_SWAGGER_UI_PATH"] = "/swagger-ui"
     app.config["OPENAPI_SWAGGER_UI_URL"] = "https://cdn.jsdelivr.net/npm/swagger-ui-dist/"
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///report_db"
+    app.config["SQLALCHEMY_DATABASE_URI"] = db_url or os.getenv("DATABASE_URL",  "sqlite:///report_db")
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.init_app(app)
     migrate = Migrate(app, db)

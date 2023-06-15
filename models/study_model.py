@@ -7,8 +7,8 @@ class StudyModel(db.Model):
     id = db.Column(db.Integer, primary_key=True,autoincrement=True)
     worker_id = db.Column(db.String, db.ForeignKey("worker.worker_id"), nullable=False, unique=True) #foreign key
     created = db.Column(db.Date, nullable=True)
-    study_group = db.Column(db.String(255), nullable=False)
-    messages_listened = db.Column(db.String(255), nullable=True)
+    study_group = db.Column(db.String(256), nullable=False)
+    messages_listened = db.Column(db.String(512), nullable=True)
     book_read = db.Column(db.String, nullable=True)
     comment_study = db.Column(db.Text, nullable=True)
 
