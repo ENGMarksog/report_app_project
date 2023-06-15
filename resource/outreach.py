@@ -20,7 +20,7 @@ class OutreachList(MethodView):
     def get(self):
         return OutreachModel.query.all() 
     
-    @jwt_required(fresh=True)
+    @jwt_required()
     @blp.arguments(OutreachSchema)
     @blp.response(201, OutreachUpdateSchema)
     def post(self, outreach_data):
@@ -46,7 +46,7 @@ class Outreach(MethodView):
         outreach = OutreachModel.query.get_or_404(created)
         return outreach
     
-    @jwt_required(fresh=True)
+    @jwt_required()
     @blp.arguments(OutreachUpdateSchema)
     def put(self, outreach_data, created):
         outreach = OutreachModel.query.get_or_404(created)

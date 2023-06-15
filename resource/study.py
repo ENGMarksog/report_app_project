@@ -19,7 +19,7 @@ class StudyList(MethodView):
     def get(self):
         return StudyModel.query.all() 
     
-    @jwt_required(fresh=True)
+    @jwt_required()
     @blp.arguments(StudySchema)
     @blp.response(201, StudyUpdateSchema)
     def post(self, study_data):
@@ -45,7 +45,7 @@ class Study(MethodView):
         study = StudyModel.query.get_or_404(created)
         return study
     
-    @jwt_required(fresh=True)
+    @jwt_required()
     @blp.arguments(StudyUpdateSchema)
     def put(self, study_data, created):
         study = StudyModel.query.get_or_404(created)

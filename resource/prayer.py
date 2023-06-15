@@ -19,7 +19,7 @@ class PrayerList(MethodView):
     def get(self):
         return PrayerModel.query.all() 
     
-    @jwt_required(fresh=True)
+    @jwt_required()
     @blp.arguments(PrayerSchema)
     @blp.response(201, PrayerUpdateSchema)
     def post(self, prayer_data):
@@ -46,7 +46,7 @@ class Prayer(MethodView):
         prayer = PrayerModel.query.get_or_404(created)
         return prayer
     
-    @jwt_required(fresh=True)
+    @jwt_required()
     @blp.arguments(PrayerUpdateSchema)
     def put(self, prayer_data, created):
         prayer = PrayerModel.query.get_or_404(created)
