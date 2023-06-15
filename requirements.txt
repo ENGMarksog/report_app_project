@@ -13,3 +13,4 @@ flask-jwt-extended
 pymongo
 Flask-PyMongo
 passlib
+gunicorn
