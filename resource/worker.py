@@ -99,7 +99,7 @@ class WorkerLogin(MethodView):
         worker = WorkerModel.query.filter(
             WorkerModel.email == worker_data["email"]
         ).first()
-
+        
         if worker and pbkdf2_sha256.verify(worker_data["password"], worker.password):
             access_token = create_access_token(identity=worker.worker_id)
             refresh_token = create_refresh_token(worker.worker_id)
@@ -116,7 +116,7 @@ class TokenRefresh(MethodView):
         new_token = create_refresh_token(identity=current_worker, fresh=False)
         jti = get_jwt()["jti"]
         BLOCKLIST.add(jti)
-        return {"access_token": new_token}, 200
+        return {"access_token": new_token, "current_user": current_worker}, 200
 
 @blp.route("/logout")
 class WorkerLogout(MethodView):

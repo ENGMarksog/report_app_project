@@ -17,9 +17,9 @@ class StudyList(MethodView):
     @jwt_required()
     @blp.response(200, StudySchema(many=True))
     def get(self):
-        return StudyModel.query.all() 
+        return StudyModel.query.all()
     
-    @jwt_required()
+    @jwt_required(fresh=True)
     @blp.arguments(StudySchema)
     @blp.response(201, StudyUpdateSchema)
     def post(self, study_data):
@@ -45,7 +45,7 @@ class Study(MethodView):
         study = StudyModel.query.get_or_404(created)
         return study
     
-    @jwt_required()
+    @jwt_required(fresh=True)
     @blp.arguments(StudyUpdateSchema)
     def put(self, study_data, created):
         study = StudyModel.query.get_or_404(created)
@@ -63,7 +63,7 @@ class Study(MethodView):
 
         return study
     
-    @jwt_required()
+    @jwt_required(fresh=True)
     def delete(cls, created):
         jwt = get_jwt()
         if not jwt.get("is_admin"):

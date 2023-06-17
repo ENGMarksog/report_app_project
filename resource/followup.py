@@ -19,7 +19,7 @@ class StudyList(MethodView):
     def get(self):
         return FollowupModel.query.all() 
     
-    @jwt_required()
+    @jwt_required(fresh=True)
     @blp.arguments(FollowupSchema)
     @blp.response(201, FollowupUpdateSchema)
     def post(self, followup_data):
@@ -45,7 +45,7 @@ class Study(MethodView):
         followup = FollowupModel.query.get_or_404(created)
         return followup
     
-    @jwt_required()
+    @jwt_required(fresh=True)
     @blp.arguments(FollowupUpdateSchema)
     def put(self, followup_data, created):
         followup = FollowupModel.query.get_or_404(created)
@@ -63,7 +63,7 @@ class Study(MethodView):
 
         return followup
     
-    @jwt_required()
+    @jwt_required(fresh=True)
     def delete(cls, created):
         jwt = get_jwt()
         if not jwt.get("is_admin"):
